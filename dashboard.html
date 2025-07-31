@@ -1,0 +1,186 @@
+<div class="header">
+    <h1><img src="/assets/app-icon.png" alt="app icon" style="width:48px; height:48px;"> Momaid</h1>
+    <p>Your trusted companion throughout your pregnancy journey</p>
+    <div class="user-nav">
+        <div class="user-avatar" id="userAvatar" onclick="toggleProfileEdit()">M</div>
+        <button class="nav-btn" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<div class="main-grid">
+    <!-- Sidebar with Profile -->
+    <div class="sidebar">
+        <div class="card profile-card">
+            <h2>Profile</h2>
+            <div class="profile-avatar" id="profileAvatar">M</div>
+            <div class="profile-name" id="profileName">Maya Johnson</div>
+            <div class="profile-subtitle" id="profileSubtitle">28 weeks pregnant</div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="profileWeeks">28</div>
+                    <div class="stat-label">Weeks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="profileTrimester">3rd</div>
+                    <div class="stat-label">Trimester</div>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <button class="action-btn" onclick="showSection('profile')">Edit Profile</button>
+                <button class="action-btn" onclick="showSection('appointments')">Appointments</button>
+                <button class="action-btn" onclick="showSection('notes')">My Notes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="card dashboard-overview">
+            <h2><img src="assets/overview-icon.png" alt="overview icon" class="icon"> Dashboard Overview</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <div class="overview-icon"><img src="assets/week.png" alt="weeks icon" class="icon"></div>
+                    <div class="overview-value" id="dashWeeks">28</div>
+                    <div class="overview-label">Weeks Pregnant</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-icon"><img src="assets/days-icon.png" alt="days icon" class="icon"></div>
+                    <div class="overview-value" id="dashDaysLeft">84</div>
+                    <div class="overview-label">Days Remaining</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-icon"><img src="assets/appointment-icon.png" alt="appointment icon" class="icon"></div>
+                    <div class="overview-value" id="dashAppointments">2</div>
+                    <div class="overview-label">Upcoming Appointments</div>
+                </div>
+                <div class="overview-item">
+                    <div class="overview-icon"><img src="assets/tips-icon.png" alt="tips icon" class="icon"></div>
+                    <div class="overview-value" id="dashTips">5</div>
+                    <div class="overview-label">New Tips</div>
+                </div>
+            </div>
+            
+            <div class="pregnancy-tracker">
+                <div class="week-display">
+                    <div class="week-number" id="weekNumber">28</div>
+                    <div>Weeks Pregnant</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 70%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly Tips -->
+        <div class="card">
+            <h2><img src="assets/tip.png" alt="weekly tips" class="icon">Weekly Tips & Advice</h2>
+            <div class="tips-container" id="tipsContainer">
+                <div class="tip-item">
+                    <div class="tip-category">Health</div>
+                    <div>Monitor for signs of preeclampsia: swelling, headaches, vision changes.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-category">Development</div>
+                    <div>Baby's movements may feel stronger but less frequent due to less space.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-category">Planning</div>
+                    <div>Start preparing your hospital bag for the big day.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Clinics -->
+        <div class="card">
+            <h2><img src="assets/clinic.png" alt="health center" class="icon">Nearby Health Clinics</h2>
+            <div class="location-input">
+                <input type="text" id="locationInput" placeholder="Enter your city or address">
+                <button class="btn" onclick="searchClinics()" style="width: auto; padding: 12px 20px;">Find Clinic</button>
+            </div>
+            <div id="clinics-container" class="clinic-list">
+                <div class="loading">
+                    <div>Enter your location to find nearby health clinics</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Edit Modal -->
+<div id="profileModal" class="auth-overlay">
+    <div class="auth-modal">
+        <h2>Edit Profile</h2>
+        <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="editName" placeholder="Enter your full name">
+        </div>
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="editEmail" placeholder="Enter your email">
+        </div>
+        <div class="input-group">
+            <label>Due Date</label>
+            <input type="date" id="editDueDate">
+        </div>
+        <div class="input-group">
+            <label>Healthcare Provider</label>
+            <input type="text" id="editProvider" placeholder="Enter your doctor's name">
+        </div>
+        <div class="input-group">
+            <label>Emergency Contact</label>
+            <input type="text" id="editEmergency" placeholder="Enter emergency contact">
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn" onclick="saveProfile()">Save Changes</button>
+            <button class="btn btn-secondary" onclick="closeModal('profileModal')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Appointments Modal -->
+<div id="appointmentsModal" class="auth-overlay">
+    <div class="auth-modal" style="max-width: 500px;">
+        <h2>My Appointments</h2>
+        <div class="appointments-list">
+            <div class="appointment-item">
+                <div class="appointment-date">March 15, 2024</div>
+                <div>Regular Checkup</div>
+                <div class="appointment-time">2:00 PM - Dr. Smith</div>
+            </div>
+            <div class="appointment-item">
+                <div class="appointment-date">March 29, 2024</div>
+                <div>Ultrasound Scan</div>
+                <div class="appointment-time">10:30 AM - Radiology Dept.</div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="btn" onclick="addAppointment()">Add New Appointment</button>
+            <button class="btn btn-secondary" onclick="closeModal('appointmentsModal')" style="margin-top: 10px;">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Notes Modal -->
+<div id="notesModal" class="auth-overlay">
+    <div class="auth-modal" style="max-width: 500px;">
+        <h2>My Notes</h2>
+        <div class="notes-list">
+            <div class="note-item">
+                <div class="note-date">March 10, 2024</div>
+                <div>Questions for next appointment</div>
+                <div class="note-preview">Ask about baby movements frequency...</div>
+            </div>
+            <div class="note-item">
+                <div class="note-date">March 8, 2024</div>
+                <div>Baby names list</div>
+                <div class="note-preview">Emma, Sofia, Oliver, Liam...</div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="btn" onclick="addNote()">Add New Note</button>
+            <button class="btn btn-secondary" onclick="closeModal('notesModal')" style="margin-top: 10px;">Close</button>
+        </div>
+    </div>
+</div>
+
+<script src="script/healthcenters.js"></script>

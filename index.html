@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Momaid - Your Pregnancy Companion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen for Non-logged Users -->
+        <div id="welcomeScreen" class="welcome-screen">
+            <h2>Welcome to Momaid</h2>
+            <p>Your trusted companion throughout your pregnancy journey.</p>
+            <div class="auth-buttons">
+                <button class="btn" onclick="showAuthModal('login')">Login</button>
+                <button class="btn btn-secondary" onclick="showAuthModal('register')">Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Main App (Hidden until logged in) -->
+        <div id="mainApp" class="hidden">
+            <!-- This will be loaded from dashboard.html -->
+        </div>
+
+        <!-- Auth Modal -->
+        <div id="authModal" class="auth-overlay">
+            <div class="auth-modal">
+                <h2 id="authTitle">Login</h2>
+                <div id="loginForm">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password">
+                    </div>
+                    <button class="btn" onclick="login()">Login</button>
+                    <p style="text-align: center; margin-top: 15px; color: #718096;">
+                        <a href="#" onclick="switchAuthMode('reset')" style="color: #667eea;">Forgot Password?</a>
+                    </p>
+                    <p style="text-align: center; margin-top: 15px; color: #718096;">
+                        Don't have an account? 
+                        <a href="#" onclick="switchAuthMode('register')" style="color: #667eea;">Sign up</a>
+                    </p>
+                </div>
+                <div id="registerForm" class="hidden">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="registerName" placeholder="Enter your full name">
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" placeholder="Enter your email">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="registerPassword" placeholder="Create a password">
+                    </div>
+                    <div class="input-group">
+                        <label>Due Date</label>
+                        <input type="date" id="registerDueDate">
+                    </div>
+                    <button class="btn" onclick="register()">Sign Up</button>
+                    <p style="text-align: center; margin-top: 15px; color: #718096;">
+                        Already have an account? 
+                        <a href="#" onclick="switchAuthMode('login')" style="color: #667eea;">Login</a>
+                    </p>
+                </div>
+
+                <!-- Reset Password Form -->
+                <div id="resetForm" class="hidden">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="resetEmail" placeholder="Enter your registered email">
+                    </div>
+                    <button class="btn" onclick="resetPassword()">Reset Password</button>
+                    <p style="text-align: center; margin-top: 15px; color: #718096;">
+                        Remember your password? 
+                        <a href="#" onclick="switchAuthMode('login')" style="color: #667eea;">Login</a>
+                    </p>
+                </div>
+
+                <!-- New Password Form -->
+                <div id="newPasswordForm" class="hidden">
+                    <input type="hidden" id="newPasswordEmail">
+                    <div class="input-group">
+                        <label>New Password</label>
+                        <input type="password" id="newPassword" placeholder="Enter your new password">
+                    </div>
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your new password">
+                    </div>
+                    <button class="btn" onclick="setNewPassword()">Set New Password</button>
+                    <p style="text-align: center; margin-top: 15px; color: #718096;">
+                        Remember your password? 
+                        <a href="#" onclick="switchAuthMode('login')" style="color: #667eea;">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript files -->
+    <script src="script/auth.js"></script>
+    <script src="/script/tracker.js"></script>
+    <script src="/script/tips.js"></script>
+    <script src="/script/healthcenters.js"></script>
+    <script>
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+        });
+
+        // Load dashboard content when user is authenticated
+        async function loadDashboard() {
+            try {
+                const response = await fetch('dashboard.html');
+                const dashboardHTML = await response.text();
+                document.getElementById('mainApp').innerHTML = dashboardHTML;
+                updateUserInterface();
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                // Fallback: show basic dashboard structure
+                document.getElementById('mainApp').innerHTML = `
+                    <div class="header">
+                        <h1>Momaid</h1>
+                        <p>Your trusted companion throughout your pregnancy journey</p>
+                        <div class="user-nav">
+                            <div class="user-avatar" id="userAvatar" onclick="toggleProfileEdit()">M</div>
+                            <button class="nav-btn" onclick="logout()">Logout</button>
+                        </div>
+                    </div>
+                    <div class="main-content">
+                        <div class="card">
+                            <h2>Dashboard Loading...</h2>
+                            <p>Please refresh the page if content doesn't load.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('auth-overlay')) {
+                e.target.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
