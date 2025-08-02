@@ -157,7 +157,7 @@ curl -I http://localhost | grep -i x-served-by
 
 **Expected Output:**
 ```
-![Load Balancer Test](/assets/image.png)
+![Load Balancer Test](assets/image.png)
 ```
 
 
