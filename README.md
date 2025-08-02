@@ -157,7 +157,7 @@ curl -I http://localhost | grep -i x-served-by
 
 **Expected Output:**
 ```
-![output snippet](/assets/image.png)
+![Load Balancer Test](/assets/image.png)
 ```
 
 
@@ -166,7 +166,7 @@ curl -I http://localhost | grep -i x-served-by
 
 ```
 momaid/
-├── Dockerfile                 # Multi-stage Docker build
+├── Dockerfile                 # Docker build
 ├── nginx.conf                # Nginx server configuration
 ├── index.html                # Main application entry point
 ├── dashboard.html            # Dashboard components
