@@ -1,8 +1,6 @@
 # Momaid - Your Pregnancy Companion
 
-![Momaid Logo](assets/app-icon.png)
-
-A comprehensive web application designed to support expectant mothers throughout their pregnancy journey with personalized tracking, tips, and healthcare resources.
+This repository contains a comprehensive web application designed to support expectant mothers throughout their pregnancy journey with personalized tracking, tips, and healthcare resources.
 
 ##  Docker Hub Repository
 
@@ -28,6 +26,7 @@ A comprehensive web application designed to support expectant mothers throughout
    ```
 
 3. **Push to Docker Hub (optional)**
+> Replace `yourusername` with your Docker Hub username if you're rebuilding your own version.
    ```bash
    docker login
    docker push yourusername/momaid:v1.0
@@ -83,21 +82,15 @@ backend webapps
     server web02 52.70.40.236:8080 check
 ```
 
-### Reloading HAProxy Configuration
+### Reloading HAProxy Inside the Container
 
 ```bash
-# Test configuration syntax
-sudo haproxy -f /etc/haproxy/haproxy.cfg -c
+# Reload HAProxy without stopping the container
+docker exec -it lb-01 sh -c 'haproxy -sf $(pidof haproxy) -f /etc/haproxy/haproxy.cfg'
 
-# Reload HAProxy without dropping connections
-sudo systemctl reload haproxy
+# Optionally, check if HAProxy is running and config is valid
+docker exec -it lb-01 haproxy -c -f /etc/haproxy/haproxy.cfg
 
-# Alternative: Restart HAProxy service
-sudo systemctl restart haproxy
-
-# Verify HAProxy status
-sudo systemctl status haproxy
-```
 
 ### Adding Server Identification Headers
 
@@ -124,6 +117,13 @@ docker exec -it app nginx -s reload
 # Verify the configuration was added
 docker exec -it app grep -A1 "X-Content-Type-Options" /etc/nginx/conf.d/nginx.conf
 ```
+## Deployment IPs 
+
+These are the IPs used in the HAProxy config and for direct testing:
+
+- Load Balancer (lb-01): http://13.221.204.4:80
+- Web01: http://3.88.177.20:8080
+- Web02: http://52.70.40.236:8080
 
 ##  Testing Steps & Evidence
 
@@ -157,7 +157,7 @@ curl -I http://localhost | grep -i x-served-by
 
 **Expected Output:**
 ```
-![output snippet](image.png)
+![output snippet](/assets/image.png)
 ```
 
 
@@ -185,16 +185,16 @@ momaid/
 1. **Pull and run the application:**
    ```bash
    docker pull kellia855/momaid:v1
-   docker run -d --name momaid-test -p 8080:8080 yourusername/momaid:v1
+   docker run -d -p 8080:8080 kellia/momaid:v1
    ```
 
 2. **Verify it's running:**
    ```bash
-   curl -I http://localhost:8080
+   curl -I http://localhost
    ```
 
 3. **Access the application:**
-   Open `http://localhost:8080` in your browser
+   Open `http://localhost` in your browser
 
 4. **Test core functionality:**
    - Register a new account
@@ -202,4 +202,9 @@ momaid/
    - View dashboard with pregnancy tracking
    - Test the healthcare finder (requires internet)
 
-**Made for expectant mothers everywhere** 
+
+## Author
+
+**Kellia Kamikazi** 
+
+*Made for expectant mothers everywhere*
