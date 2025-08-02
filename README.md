@@ -157,7 +157,27 @@ curl -I http://localhost | grep -i x-served-by
 
 **Expected Output:**
 ```
-![Load Balancer Test](/assets/image.png)
+ubuntu@6579-lb-01:~$ curl -I http://localhost | grep -i x-served-by
+tp://localhost   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0  7356    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+x-served-by: web-01
+ubuntu@6579-lb-01:~$ curl -I http://localhost | grep -i x-served-by
+host |   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0  7356    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+x-served-by: web-02
+ubuntu@6579-lb-01:~$ curl -I http://localhost | grep -i x-served-by
+ | grep  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0  7356    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+x-served-by: web-01
+ubuntu@6579-lb-01:~$ curl -I http://localhost | grep -i x-served-by
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0  7356    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+x-served-by: web-02
+ubuntu@6579-lb-01:~$ 
 ```
 
 
