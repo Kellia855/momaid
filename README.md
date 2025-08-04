@@ -223,7 +223,7 @@ momaid/
    - Test the healthcare finder (requires internet)
 
 
-##Demo video
+##  Demo video
 
 Watch the 2-minute app demo here:  
 🔗 [Momaid App Demo](https://youtu.be/5WzFmUvVrtM)
