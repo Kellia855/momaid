@@ -223,7 +223,13 @@ momaid/
    - Test the healthcare finder (requires internet)
 
 
-## Author
+##Demo video
+
+Watch the 2-minute app demo here:  
+🔗 [Momaid App Demo](https://youtu.be/5WzFmUvVrtM)
+
+
+## Author:
 
 **Kellia Kamikazi** 
 
